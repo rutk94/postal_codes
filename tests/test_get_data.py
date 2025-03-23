@@ -20,11 +20,6 @@ def setup_codes_list() -> list[str]:
     ]
 
 
-# @fixture
-# def setup_series(setup_codes_list: list[str]) -> pd.Series:
-#     return pd.Series(setup_codes_list)
-
-
 @fixture()
 def setup_obj(setup_codes_list: list[str], monkeypatch) -> PostalCodeData:
     mock_get_list = MagicMock(return_value=setup_codes_list)
