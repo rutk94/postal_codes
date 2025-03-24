@@ -48,6 +48,7 @@ def test_distmatrix_genarator(
     set_index_enabled: bool,
 ) -> None:
     distmatrix: DistanceMatrix = DistanceMatrix()
+    proper_codes: list[str] = sorted(setup_codes_list[:7])
     matrix: pd.DataFrame = distmatrix.generate(
         codes=setup_codes_list,
         dist_unit=dist_unit,
@@ -57,21 +58,21 @@ def test_distmatrix_genarator(
     assert matrix.equals(distmatrix.df)
 
     if set_index_enabled:
-        assert list(matrix.columns) == sorted(setup_codes_list[:7])
-        assert list(matrix.index) == sorted(setup_codes_list[:7])
+        assert list(matrix.columns) == proper_codes
+        assert list(matrix.index) == proper_codes
         assert list(matrix.select_dtypes(include='int32').columns) == list(
             matrix.columns
         )
     else:
         assert list(matrix.columns)[0] == codes_col
-        assert list(matrix.columns)[1:] == sorted(setup_codes_list[:7])
-        assert matrix[codes_col].tolist() == sorted(setup_codes_list[:7])
+        assert list(matrix.columns)[1:] == proper_codes
+        assert matrix[codes_col].tolist() == proper_codes
         assert list(matrix.select_dtypes(include='int32').columns) == list(
             matrix.columns[1:]
         )
         matrix.set_index(codes_col, inplace=True)
 
-    random_codes: list[str] = random.choices(setup_codes_list[:7], k=2)
+    random_codes: list[str] = random.choices(proper_codes, k=2)
 
     diagonal_value: Any = matrix.loc[random_codes[0], random_codes[0]]
     assert isinstance(diagonal_value, (int, np.int32))
