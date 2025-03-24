@@ -24,6 +24,27 @@ class DistanceMatrix:
         pass
 
     def _check(self, codes: list[str], setattr_enabled: bool=True) -> list[str]:
+        """
+        Checks format of postal codes and whether they are available in pgeocode database.
+        Args:
+            codes: list[str]
+                List of postal codes
+            setattr_enabled: bool
+                If you need to set attributes
+                self.proper_codes, self.wrong_format_codes, self.unknown_codes
+
+        Returns:
+            proper_codes: list[str]
+                List of proper postal codes
+
+        Sets attributes (if setattr_enabled is True):
+            self.proper_codes: list[str]
+                List of proper postal codes
+            self.wrong_format_codes: list[str]
+                List of postal codes with wrong format
+            self.unknown_codes: list[str]
+                List of postal codes which are not available in pgeocode database
+        """
         # wrong format codes
         pattern = re.compile(r'\d{2}-\d{3}')
         wrong_format_codes: list[str] = [
@@ -62,6 +83,20 @@ class DistanceMatrix:
         codes_col: str = 'KOD_POCZ',
         set_index_enabled: bool = False
     ) -> pd.DataFrame:
+        """
+        Generates symmetrical matrix including distances between postal codes, as DataFrame object.
+        Args:
+            codes: list[str]
+                List of postal codes
+            dist_unit: Literal['km', 'm'] = 'm'
+                Unit of calculated distances: 'km' - kilometers, 'm' - meters
+            codes_col: str = 'KOD_POCZ'
+                Name of 1st column including postal codes
+            set_index_enabled: bool = False
+                If you need to represent postal codes as index
+        Returns:
+
+        """
         # check provided distance unit
         if dist_unit.lower() not in ['km', 'm']:
             raise ValueError(
