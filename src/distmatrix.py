@@ -60,6 +60,7 @@ class DistanceMatrix:
         codes: list[str],
         dist_unit: Literal['km', 'm'] = 'm',
         codes_col: str = 'KOD_POCZ',
+        set_index_enabled: bool = False
     ) -> pd.DataFrame:
         # check provided distance unit
         if dist_unit not in ['km', 'm']:
@@ -96,6 +97,9 @@ class DistanceMatrix:
         # create DataFrame object
         matrix_df: pd.DataFrame = pd.DataFrame(matrix, columns=codes, dtype='int32')
         matrix_df.insert(0, codes_col, codes)
+
+        if set_index_enabled:
+            matrix_df.set_index(codes_col, inplace=True)
 
         self.df = matrix_df.copy()
 
