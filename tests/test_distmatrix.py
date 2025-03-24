@@ -37,23 +37,40 @@ def test_codes_checker(setup_codes_list: list[str]) -> None:
     assert distmatrix.wrong_format_codes == [setup_codes_list[8]]
 
 
-@mark.parametrize('dist_unit, codes_col', [('km', 'kod_pocztowy'), ('m', 'kod')])
+@mark.parametrize(
+    'dist_unit, codes_col, set_index_enabled',
+    [('km', 'kod_pocztowy', True), ('m', 'kod', False)],
+)
 def test_distmatrix_genarator(
-    setup_codes_list: list[str], dist_unit: Literal['km', 'm'], codes_col: str
+    setup_codes_list: list[str],
+    dist_unit: Literal['km', 'm'],
+    codes_col: str,
+    set_index_enabled: bool,
 ) -> None:
     distmatrix: DistanceMatrix = DistanceMatrix()
     matrix: pd.DataFrame = distmatrix.generate(
-        codes=setup_codes_list, dist_unit=dist_unit, codes_col=codes_col
+        codes=setup_codes_list,
+        dist_unit=dist_unit,
+        codes_col=codes_col,
+        set_index_enabled=set_index_enabled,
     )
-    assert list(matrix.columns)[0] == codes_col
-    assert list(matrix.columns)[1:] == sorted(setup_codes_list[:7])
-    assert matrix[codes_col].tolist() == sorted(setup_codes_list[:7])
     assert matrix.equals(distmatrix.df)
-    assert list(matrix.select_dtypes(include='int32').columns) == list(
-        matrix.columns[1:]
-    )
 
-    matrix.set_index(codes_col, inplace=True)
+    if set_index_enabled:
+        assert list(matrix.columns) == sorted(setup_codes_list[:7])
+        assert list(matrix.index) == sorted(setup_codes_list[:7])
+        assert list(matrix.select_dtypes(include='int32').columns) == list(
+            matrix.columns
+        )
+    else:
+        assert list(matrix.columns)[0] == codes_col
+        assert list(matrix.columns)[1:] == sorted(setup_codes_list[:7])
+        assert matrix[codes_col].tolist() == sorted(setup_codes_list[:7])
+        assert list(matrix.select_dtypes(include='int32').columns) == list(
+            matrix.columns[1:]
+        )
+        matrix.set_index(codes_col, inplace=True)
+
     random_codes: list[str] = random.choices(setup_codes_list[:7], k=2)
 
     diagonal_value: Any = matrix.loc[random_codes[0], random_codes[0]]
