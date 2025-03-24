@@ -23,13 +23,12 @@ class DistanceMatrix:
     def load_from_database(cls) -> DistanceMatrix:  # type: ignore[empty-body]
         pass
 
-    def _check(self, codes: list[str]) -> list[str]:
+    def _check(self, codes: list[str], setattr_enabled: bool=True) -> list[str]:
         # wrong format codes
         pattern = re.compile(r'\d{2}-\d{3}')
         wrong_format_codes: list[str] = [
             code for code in codes if pattern.match(code) is None
         ]
-        self.wrong_format_codes = wrong_format_codes
 
         # unknown codes
         nomi = pgeocode.Nominatim('pl')
@@ -41,7 +40,6 @@ class DistanceMatrix:
             for code in codes
             if code not in known_codes and code not in wrong_format_codes
         ]
-        self.unknown_codes = unknown_codes
 
         # proper codes
         proper_codes: list[str] = [
@@ -49,7 +47,11 @@ class DistanceMatrix:
             for code in codes
             if code not in wrong_format_codes and code not in unknown_codes
         ]
-        self.proper_codes = proper_codes
+
+        if setattr_enabled:
+            self.wrong_format_codes = wrong_format_codes
+            self.unknown_codes = unknown_codes
+            self.proper_codes = proper_codes
 
         return proper_codes
 
