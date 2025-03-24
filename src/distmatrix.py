@@ -63,7 +63,7 @@ class DistanceMatrix:
         set_index_enabled: bool = False
     ) -> pd.DataFrame:
         # check provided distance unit
-        if dist_unit not in ['km', 'm']:
+        if dist_unit.lower() not in ['km', 'm']:
             raise ValueError(
                 f'Wrong argument value: {dist_unit=}. Should be "km" or "m"'
             )
