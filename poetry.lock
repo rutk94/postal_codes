@@ -1,4 +1,12 @@
 [[package]]
+name = "absl-py"
+version = "2.2.0"
+description = "Abseil Python Common Libraries, see https://github.com/abseil/abseil-py."
+category = "main"
+optional = false
+python-versions = ">=3.8"
+
+[[package]]
 name = "certifi"
 version = "2025.1.31"
 description = "Python package for providing Mozilla's CA Bundle."
@@ -45,6 +53,14 @@ python-versions = ">=3.6"
 all = ["ruff (>=0.6.2)", "mypy (>=1.11.2)", "pytest (>=8.3.2)", "flake8 (>=7.1.1)"]
 
 [[package]]
+name = "immutabledict"
+version = "4.2.1"
+description = "Immutable wrapper around dictionaries (a fork of frozendict)"
+category = "main"
+optional = false
+python-versions = ">=3.8"
+
+[[package]]
 name = "iniconfig"
 version = "2.1.0"
 description = "brain-dead simple config-ini parsing"
@@ -87,6 +103,21 @@ description = "Fundamental package for array computing in Python"
 category = "main"
 optional = false
 python-versions = ">=3.10"
+
+[[package]]
+name = "ortools"
+version = "9.12.4544"
+description = "Google OR-Tools python libraries and modules"
+category = "main"
+optional = false
+python-versions = ">=3.8"
+
+[package.dependencies]
+absl-py = ">=2.0.0"
+immutabledict = ">=3.0.0"
+numpy = ">=1.13.3"
+pandas = ">=2.0.0"
+protobuf = ">=5.29.3,<5.30"
 
 [[package]]
 name = "packaging"
@@ -166,6 +197,14 @@ python-versions = ">=3.8"
 [package.extras]
 dev = ["pre-commit", "tox"]
 testing = ["pytest", "pytest-benchmark"]
+
+[[package]]
+name = "protobuf"
+version = "5.29.4"
+description = ""
+category = "main"
+optional = false
+python-versions = ">=3.8"
 
 [[package]]
 name = "pytest"
@@ -291,22 +330,26 @@ zstd = ["zstandard (>=0.18.0)"]
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.10"
-content-hash = "805baa9f4b56ea792779f2251184db86be46ee6ae012382598f097bcf68e713d"
+content-hash = "cb9b13704946c765cc64bad6543c82ff192aadfbdfa1f0763dc0cac2fec2dda4"
 
 [metadata.files]
+absl-py = []
 certifi = []
 charset-normalizer = []
 colorama = []
 exceptiongroup = []
 idna = []
+immutabledict = []
 iniconfig = []
 mypy = []
 mypy-extensions = []
 numpy = []
+ortools = []
 packaging = []
 pandas = []
 pgeocode = []
 pluggy = []
+protobuf = []
 pytest = []
 python-dateutil = []
 python-dotenv = []
