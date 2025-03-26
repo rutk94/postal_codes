@@ -7,6 +7,14 @@ optional = false
 python-versions = ">=3.8"
 
 [[package]]
+name = "annotated-types"
+version = "0.7.0"
+description = "Reusable constraint types to use with typing.Annotated"
+category = "main"
+optional = false
+python-versions = ">=3.8"
+
+[[package]]
 name = "certifi"
 version = "2025.1.31"
 description = "Python package for providing Mozilla's CA Bundle."
@@ -207,6 +215,34 @@ optional = false
 python-versions = ">=3.8"
 
 [[package]]
+name = "pydantic"
+version = "2.10.6"
+description = "Data validation using Python type hints"
+category = "main"
+optional = false
+python-versions = ">=3.8"
+
+[package.dependencies]
+annotated-types = ">=0.6.0"
+pydantic-core = "2.27.2"
+typing-extensions = ">=4.12.2"
+
+[package.extras]
+email = ["email-validator (>=2.0.0)"]
+timezone = ["tzdata"]
+
+[[package]]
+name = "pydantic-core"
+version = "2.27.2"
+description = "Core functionality for Pydantic validation and serialization"
+category = "main"
+optional = false
+python-versions = ">=3.8"
+
+[package.dependencies]
+typing-extensions = ">=4.6.0,<4.7.0 || >4.7.0"
+
+[[package]]
 name = "pytest"
 version = "8.3.5"
 description = "pytest: simple powerful testing with Python"
@@ -330,10 +366,11 @@ zstd = ["zstandard (>=0.18.0)"]
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.10"
-content-hash = "cb9b13704946c765cc64bad6543c82ff192aadfbdfa1f0763dc0cac2fec2dda4"
+content-hash = "4271cec3da870e2fa962b0aa29b2513dfca9f1ee6583a9f19425a44e6bcbbce5"
 
 [metadata.files]
 absl-py = []
+annotated-types = []
 certifi = []
 charset-normalizer = []
 colorama = []
@@ -350,6 +387,8 @@ pandas = []
 pgeocode = []
 pluggy = []
 protobuf = []
+pydantic = []
+pydantic-core = []
 pytest = []
 python-dateutil = []
 python-dotenv = []

@@ -13,6 +13,7 @@ mypy = "^1.15.0"
 python-dotenv = "^1.0.1"
 pgeocode = "^0.5.0"
 ortools = "^9.12.4544"
+pydantic = "^2.10.6"
 
 [tool.poetry.dev-dependencies]
 
