@@ -9,7 +9,7 @@ class Solver:
     def __init__(
         self,
         dist_matrix: list,
-        amount_empl: int,
+        amount: int,
         starts: list,
         ends: list,
         # nodes: list,
@@ -23,7 +23,7 @@ class Solver:
     ) -> None:
 
         self.dist_matrix: list = dist_matrix
-        self.amount_empl: int = amount_empl
+        self.amount: int = amount
         self.starts: list = starts
         self.ends: list = ends
         # self.nodes: list = nodes
@@ -37,7 +37,7 @@ class Solver:
         self.manager = pywrapcp.RoutingIndexManager(
             # len(self.nodes),
             len(self.dist_matrix),
-            self.amount_empl,
+            self.amount,
             self.starts,
             self.ends
         )
