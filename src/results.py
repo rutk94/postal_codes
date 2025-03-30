@@ -7,6 +7,7 @@ from src.vehicles import Vehicle
 class Results:
     """
     Represents calculation results
+
     Attributes:
         solver: Solver
             Solver object

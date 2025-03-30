@@ -8,6 +8,7 @@ class NoSolutionError(Exception):
 class Solver:
     """
     Represents ORtools constraint solver
+
     Attributes:
         dist_matrix: list
             Matrix of distances between postal codes
