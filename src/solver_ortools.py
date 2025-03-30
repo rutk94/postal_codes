@@ -6,6 +6,18 @@ class NoSolutionError(Exception):
 
 
 class Solver:
+    """
+    Represents ORtools constraint solver
+    Attributes:
+        dist_matrix: list
+            Matrix of distances between postal codes
+        amount: int
+            Amount of vehicles
+        starts: list
+            List of integers representing ordinal numbers of the postal codes for the starting points of vehicles in the distance matrix
+        ends: list
+            List of integers representing ordinal numbers of the postal codes for the ending points of vehicles in the distance matrix
+    """
     def __init__(
         self,
         dist_matrix: list,
