@@ -3,6 +3,7 @@ import numpy as np
 import pgeocode
 from pytest import fixture, mark, raises
 from typing import TYPE_CHECKING, Literal, Any
+
 if TYPE_CHECKING:
     import pandas as pd
 

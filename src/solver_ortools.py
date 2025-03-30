@@ -18,6 +18,7 @@ class Solver:
         ends: list
             List of integers representing ordinal numbers of the postal codes for the ending points of vehicles in the distance matrix
     """
+
     def __init__(
         self,
         dist_matrix: list,
@@ -26,14 +27,12 @@ class Solver:
         ends: list,
         # nodes: list,
         # capacities: list[int],
-
         # TODO: add global variables
         # max_single_distance_enabled: bool = True,  # MAX_SINGLE_DISTANCE_ENABLED
-        max_total_distance: int = 10_000_000,   # MAX_DISTANCE
-        time_limit: int = 60,    # TIME_LIMIT
-        solution_limit: int = 10_000_000,   # SOLUTION_LIMIT
+        max_total_distance: int = 10_000_000,  # MAX_DISTANCE
+        time_limit: int = 60,  # TIME_LIMIT
+        solution_limit: int = 10_000_000,  # SOLUTION_LIMIT
     ) -> None:
-
         self.dist_matrix: list = dist_matrix
         self.amount: int = amount
         self.starts: list = starts
@@ -51,7 +50,7 @@ class Solver:
             len(self.dist_matrix),
             self.amount,
             self.starts,
-            self.ends
+            self.ends,
         )
         self.routing = pywrapcp.RoutingModel(self.manager)
 
@@ -79,7 +78,7 @@ class Solver:
         """Returns minimal distance between two points"""
         return min(
             self._distance_callback(from_index, to_index),
-            self._distance_callback(to_index, from_index)
+            self._distance_callback(to_index, from_index),
         )
 
     # def _demand_callback(self, from_index):
@@ -88,7 +87,6 @@ class Solver:
     #     from_node = self.manager.IndexToNode(from_index)
     #     # return self.nodes[from_node].demand_weight
     #     pass
-
 
     def solve(self):
         # add distance dimension
@@ -101,7 +99,7 @@ class Solver:
             slack_max=0,
             capacity=self.max_total_distance,
             fix_start_cumul_to_zero=True,
-            name='distance'
+            name='distance',
         )
         distance_dimension = self.routing.GetDimensionOrDie('distance')
         distance_dimension.SetGlobalSpanCostCoefficient(100)
@@ -118,8 +116,12 @@ class Solver:
 
         # define parameters
         search_parameters = pywrapcp.DefaultRoutingSearchParameters()
-        search_parameters.first_solution_strategy = routing_enums_pb2.FirstSolutionStrategy.PATH_CHEAPEST_ARC
-        search_parameters.local_search_metaheuristic = routing_enums_pb2.LocalSearchMetaheuristic.GUIDED_LOCAL_SEARCH
+        search_parameters.first_solution_strategy = (
+            routing_enums_pb2.FirstSolutionStrategy.PATH_CHEAPEST_ARC
+        )
+        search_parameters.local_search_metaheuristic = (
+            routing_enums_pb2.LocalSearchMetaheuristic.GUIDED_LOCAL_SEARCH
+        )
         search_parameters.time_limit.seconds = self.time_limit
         search_parameters.solution_limit = self.solution_limit
 
@@ -132,4 +134,4 @@ class Solver:
         else:
             # TODO: add dictionary of statuses from: developers.google.com/optimization/routing/routing_options
             print(self.routing.status())
-            raise NoSolutionError('Solver couldn\'t find any solution!')
+            raise NoSolutionError("Solver couldn't find any solution!")

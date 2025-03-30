@@ -3,6 +3,7 @@ import pandas as pd
 from src.solver_ortools import Solver
 from src.vehicles import Vehicle
 
+
 class Results:
     """
     Represents calculation results
@@ -14,11 +15,9 @@ class Results:
         codes: list[str]
             List of all postal codes
     """
+
     def __init__(
-        self,
-        solver: Solver,
-        vehicles: list[Vehicle],
-        codes: list[str]
+        self, solver: Solver, vehicles: list[Vehicle], codes: list[str]
     ) -> None:
         self.solver: Solver = solver
         self.vehicles: list[Vehicle] = vehicles
@@ -27,7 +26,7 @@ class Results:
     def get_matching_result(
         self,
         vehicle_id_colname: str = 'VEHICLE_NR',
-        matched_code_colname: str = 'CASE_POSTAL_CODE'
+        matched_code_colname: str = 'CASE_POSTAL_CODE',
     ) -> pd.DataFrame:
         """
         Returns results of matching vehicles to cases (postal codes)
@@ -52,15 +51,10 @@ class Results:
                 case_code: str = self.codes[node_index]
                 all_nrs.append(nr)
                 all_codes.append(case_code)
-                index = self.solver.solution.Value(
-                    self.solver.routing.NextVar(index)
-                )
+                index = self.solver.solution.Value(self.solver.routing.NextVar(index))
 
         match_result_df: pd.DataFrame = pd.DataFrame(
-            {
-                vehicle_id_colname: all_nrs,
-                matched_code_colname: all_codes
-            }
+            {vehicle_id_colname: all_nrs, matched_code_colname: all_codes}
         )
 
         return match_result_df

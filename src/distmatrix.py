@@ -23,7 +23,7 @@ class DistanceMatrix:
     def load_from_database(cls) -> DistanceMatrix:  # type: ignore[empty-body]
         pass
 
-    def _check(self, codes: list[str], setattr_enabled: bool=True) -> list[str]:
+    def _check(self, codes: list[str], setattr_enabled: bool = True) -> list[str]:
         """
         Checks format of postal codes and whether they are available in pgeocode database.
         Args:
@@ -81,7 +81,7 @@ class DistanceMatrix:
         codes: list[str],
         dist_unit: Literal['km', 'm'] = 'm',
         codes_col: str = 'KOD_POCZ',
-        set_index_enabled: bool = False
+        set_index_enabled: bool = False,
     ) -> pd.DataFrame:
         """
         Generates symmetrical matrix including distances between postal codes, as DataFrame object.
