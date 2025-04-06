@@ -1,12 +1,14 @@
 import pandas as pd
-from pytest import fixture
+from pytest import fixture, raises, mark
+from pathlib import Path
 
 from src.solver_ortools import Solver
 from src.vehicles import Vehicle, get_vehicles
 from src.results import Results
+from src.settings import MAP_SHAPE_PATH
 
 
-@fixture()
+@fixture(scope='session')
 def setup_solver() -> Solver:
     # fmt: off
     dist_matrix: list[list[int]] = [
@@ -35,10 +37,11 @@ def setup_solver() -> Solver:
     solver: Solver = Solver(
         dist_matrix=dist_matrix, amount=amount, starts=starts, ends=ends, time_limit=30
     )
+    solver.solve()
     return solver
 
 
-@fixture()
+@fixture(scope='session')
 def setup_codes() -> list[str]:
     return [
         '05-080',  # 1 (0)
@@ -51,17 +54,17 @@ def setup_codes() -> list[str]:
         '41-103',  # 8 (7)
         '62-304',  # 9 (8)
         '99-423',  # 10 (9)
-        '01-587',  # 11 (10)
+        '98-200',  # 11 (10)
         '02-967',  # 12 (11)
-        '05-779',  # 13 (12)
-        '06-993',  # 14 (13)
+        '11-210',  # 13 (12)
+        '67-300',  # 14 (13)
         '41-134',  # 15 (14)
-        '66-978',  # 16 (15)
+        '30-129',  # 16 (15)
         '90-478',  # 17 (16)
     ]
 
 
-@fixture()
+@fixture(scope='session')
 def setup_vehicles(setup_codes: list[str]) -> list[Vehicle]:
     vehicle_codes: tuple[str, ...] = (
         '05-500',  # 3 (2)
@@ -74,14 +77,18 @@ def setup_vehicles(setup_codes: list[str]) -> list[Vehicle]:
     return vehicles
 
 
-def test_get_matching_result(
+@fixture(scope='session')
+def setup_results(
     setup_solver: Solver, setup_codes: list[str], setup_vehicles: list[Vehicle]
-) -> None:
-    _ = setup_solver.solve()
+) -> Results:
     results: Results = Results(
         solver=setup_solver, vehicles=setup_vehicles, codes=setup_codes
     )
-    matching_df: pd.DataFrame = results.get_matching_result(
+    return results
+
+
+def test_get_matching_result(setup_results: Results) -> None:
+    matching_df: pd.DataFrame = setup_results.get_matching_result(
         vehicle_id_colname='vehicle_nr', matched_code_colname='postal_code'
     )
     assert isinstance(matching_df, pd.DataFrame)
@@ -90,3 +97,24 @@ def test_get_matching_result(
         for colname in ['vehicle_nr', 'postal_code']
     )
     assert matching_df['postal_code'].is_unique
+
+
+@mark.parametrize(
+    'output_path',
+    [Path(__file__).parent / 'temp' / 'test_map.png', Path(__file__).parent / 'temp'],
+)
+def test_get_map_result(
+    output_path: Path, setup_results: Results, map_shape_path: Path = MAP_SHAPE_PATH
+) -> None:
+    setup_results.get_map_result(map_shape_path=map_shape_path, output_path=output_path)
+    assert output_path.exists()
+
+
+def test_get_map_result_raises_value_error(
+    setup_results: Results, map_shape_path: Path = MAP_SHAPE_PATH
+) -> None:
+    with raises(ValueError):
+        # wrong output file format - not .png
+        setup_results.get_map_result(
+            map_shape_path=map_shape_path, output_path=Path('test_map.jpg')
+        )

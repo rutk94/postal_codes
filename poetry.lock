@@ -39,6 +39,36 @@ optional = false
 python-versions = "!=3.0.*,!=3.1.*,!=3.2.*,!=3.3.*,!=3.4.*,!=3.5.*,!=3.6.*,>=2.7"
 
 [[package]]
+name = "contourpy"
+version = "1.3.1"
+description = "Python library for calculating contours of 2D quadrilateral grids"
+category = "main"
+optional = false
+python-versions = ">=3.10"
+
+[package.dependencies]
+numpy = ">=1.23"
+
+[package.extras]
+docs = ["furo", "sphinx (>=7.2)", "sphinx-copybutton"]
+bokeh = ["bokeh", "selenium"]
+mypy = ["contourpy", "docutils-stubs", "mypy (==1.11.1)", "types-pillow"]
+test = ["contourpy", "matplotlib", "pillow"]
+test-no-images = ["pytest", "pytest-cov", "pytest-rerunfailures", "pytest-xdist", "wurlitzer"]
+
+[[package]]
+name = "cycler"
+version = "0.12.1"
+description = "Composable style cycles"
+category = "main"
+optional = false
+python-versions = ">=3.8"
+
+[package.extras]
+docs = ["ipython", "matplotlib", "numpydoc", "sphinx"]
+tests = ["pytest", "pytest-cov", "pytest-xdist"]
+
+[[package]]
 name = "exceptiongroup"
 version = "1.2.2"
 description = "Backport of PEP 654 (exception groups)"
@@ -48,6 +78,48 @@ python-versions = ">=3.7"
 
 [package.extras]
 test = ["pytest (>=6)"]
+
+[[package]]
+name = "fonttools"
+version = "4.56.0"
+description = "Tools to manipulate font files"
+category = "main"
+optional = false
+python-versions = ">=3.8"
+
+[package.extras]
+ufo = ["fs (>=2.2.0,<3)"]
+lxml = ["lxml (>=4.0)"]
+woff = ["brotli (>=1.0.1)", "brotlicffi (>=0.8.0)", "zopfli (>=0.1.4)"]
+unicode = ["unicodedata2 (>=15.1.0)"]
+graphite = ["lz4 (>=1.7.4.2)"]
+interpolatable = ["scipy", "munkres", "pycairo"]
+plot = ["matplotlib"]
+symfont = ["sympy"]
+type1 = ["xattr"]
+pathops = ["skia-pathops (>=0.5.0)"]
+repacker = ["uharfbuzz (>=0.23.0)"]
+all = ["fs (>=2.2.0,<3)", "lxml (>=4.0)", "brotli (>=1.0.1)", "brotlicffi (>=0.8.0)", "zopfli (>=0.1.4)", "unicodedata2 (>=15.1.0)", "lz4 (>=1.7.4.2)", "scipy", "munkres", "pycairo", "matplotlib", "sympy", "xattr", "skia-pathops (>=0.5.0)", "uharfbuzz (>=0.23.0)"]
+
+[[package]]
+name = "geopandas"
+version = "1.0.1"
+description = "Geographic pandas extensions"
+category = "main"
+optional = false
+python-versions = ">=3.9"
+
+[package.dependencies]
+numpy = ">=1.22"
+packaging = "*"
+pandas = ">=1.4.0"
+pyogrio = ">=0.7.2"
+pyproj = ">=3.3.0"
+shapely = ">=2.0.0"
+
+[package.extras]
+all = ["psycopg-binary (>=3.1.0)", "SQLAlchemy (>=1.3)", "geopy", "matplotlib (>=3.5.0)", "mapclassify", "xyzservices", "folium", "geoalchemy2", "pyarrow (>=8.0.0)"]
+dev = ["pytest (>=3.1.0)", "pytest-cov", "pytest-xdist", "codecov", "black", "pre-commit"]
 
 [[package]]
 name = "idna"
@@ -75,6 +147,36 @@ description = "brain-dead simple config-ini parsing"
 category = "main"
 optional = false
 python-versions = ">=3.8"
+
+[[package]]
+name = "kiwisolver"
+version = "1.4.8"
+description = "A fast implementation of the Cassowary constraint solver"
+category = "main"
+optional = false
+python-versions = ">=3.10"
+
+[[package]]
+name = "matplotlib"
+version = "3.10.1"
+description = "Python plotting package"
+category = "main"
+optional = false
+python-versions = ">=3.10"
+
+[package.dependencies]
+contourpy = ">=1.0.1"
+cycler = ">=0.10"
+fonttools = ">=4.22.0"
+kiwisolver = ">=1.3.1"
+numpy = ">=1.23"
+packaging = ">=20.0"
+pillow = ">=8"
+pyparsing = ">=2.3.1"
+python-dateutil = ">=2.7"
+
+[package.extras]
+dev = ["meson-python (>=0.13.1,<0.17.0)", "pybind11 (>=2.13.2,!=2.13.3)", "setuptools_scm (>=7)", "setuptools (>=64)"]
 
 [[package]]
 name = "mypy"
@@ -195,6 +297,22 @@ requests = "*"
 fuzzy = ["thefuzz"]
 
 [[package]]
+name = "pillow"
+version = "11.1.0"
+description = "Python Imaging Library (Fork)"
+category = "main"
+optional = false
+python-versions = ">=3.9"
+
+[package.extras]
+docs = ["furo", "olefile", "sphinx (>=8.1)", "sphinx-copybutton", "sphinx-inline-tabs", "sphinxext-opengraph"]
+fpx = ["olefile"]
+mic = ["olefile"]
+tests = ["check-manifest", "coverage (>=7.4.2)", "defusedxml", "markdown2", "olefile", "packaging", "pyroma", "pytest", "pytest-cov", "pytest-timeout", "trove-classifiers (>=2024.10.12)"]
+typing = ["typing-extensions"]
+xmp = ["defusedxml"]
+
+[[package]]
 name = "pluggy"
 version = "1.5.0"
 description = "plugin and hook calling mechanisms for python"
@@ -241,6 +359,47 @@ python-versions = ">=3.8"
 
 [package.dependencies]
 typing-extensions = ">=4.6.0,<4.7.0 || >4.7.0"
+
+[[package]]
+name = "pyogrio"
+version = "0.10.0"
+description = "Vectorized spatial vector file format I/O using GDAL/OGR"
+category = "main"
+optional = false
+python-versions = ">=3.9"
+
+[package.dependencies]
+certifi = "*"
+numpy = "*"
+packaging = "*"
+
+[package.extras]
+benchmark = ["pytest-benchmark"]
+dev = ["cython"]
+geopandas = ["geopandas"]
+test = ["pytest", "pytest-cov"]
+
+[[package]]
+name = "pyparsing"
+version = "3.2.3"
+description = "pyparsing module - Classes and methods to define and execute parsing grammars"
+category = "main"
+optional = false
+python-versions = ">=3.9"
+
+[package.extras]
+diagrams = ["railroad-diagrams", "jinja2"]
+
+[[package]]
+name = "pyproj"
+version = "3.7.1"
+description = "Python interface to PROJ (cartographic projections and coordinate transformations library)"
+category = "main"
+optional = false
+python-versions = ">=3.10"
+
+[package.dependencies]
+certifi = "*"
 
 [[package]]
 name = "pytest"
@@ -318,6 +477,21 @@ optional = false
 python-versions = ">=3.7"
 
 [[package]]
+name = "shapely"
+version = "2.0.7"
+description = "Manipulation and analysis of geometric objects"
+category = "main"
+optional = false
+python-versions = ">=3.7"
+
+[package.dependencies]
+numpy = ">=1.14,<3"
+
+[package.extras]
+test = ["pytest", "pytest-cov"]
+docs = ["numpydoc (>=1.1.0,<1.2.0)", "matplotlib", "sphinx", "sphinx-book-theme", "sphinx-remove-toctrees"]
+
+[[package]]
 name = "six"
 version = "1.17.0"
 description = "Python 2 and 3 compatibility utilities"
@@ -366,7 +540,7 @@ zstd = ["zstandard (>=0.18.0)"]
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.10"
-content-hash = "4271cec3da870e2fa962b0aa29b2513dfca9f1ee6583a9f19425a44e6bcbbce5"
+content-hash = "8ac56aa56b26b3e87fad06dea72671a58cfa9ddd56d1493d35cfe737a5061446"
 
 [metadata.files]
 absl-py = []
@@ -374,10 +548,16 @@ annotated-types = []
 certifi = []
 charset-normalizer = []
 colorama = []
+contourpy = []
+cycler = []
 exceptiongroup = []
+fonttools = []
+geopandas = []
 idna = []
 immutabledict = []
 iniconfig = []
+kiwisolver = []
+matplotlib = []
 mypy = []
 mypy-extensions = []
 numpy = []
@@ -385,16 +565,21 @@ ortools = []
 packaging = []
 pandas = []
 pgeocode = []
+pillow = []
 pluggy = []
 protobuf = []
 pydantic = []
 pydantic-core = []
+pyogrio = []
+pyparsing = []
+pyproj = []
 pytest = []
 python-dateutil = []
 python-dotenv = []
 pytz = []
 requests = []
 ruff = []
+shapely = []
 six = []
 tomli = []
 typing-extensions = []
