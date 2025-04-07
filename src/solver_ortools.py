@@ -1,4 +1,5 @@
 from ortools.constraint_solver import routing_enums_pb2, pywrapcp
+from typing import Optional
 
 from src.settings import MAX_TOTAL_DISTANCE, SOLUTION_LIMIT, TIME_LIMIT
 
@@ -32,9 +33,9 @@ class Solver:
         # capacities: list[int],
         # TODO: add global variables
         # max_single_distance_enabled: bool = True,  # MAX_SINGLE_DISTANCE_ENABLED
-        max_total_distance: int = MAX_TOTAL_DISTANCE,
-        time_limit: int = TIME_LIMIT,
-        solution_limit: int = SOLUTION_LIMIT
+        max_total_distance: Optional[int] = MAX_TOTAL_DISTANCE,
+        time_limit: Optional[int] = TIME_LIMIT,
+        solution_limit: Optional[int] = SOLUTION_LIMIT,
     ) -> None:
         self.dist_matrix: list = dist_matrix
         self.amount: int = amount
@@ -44,9 +45,9 @@ class Solver:
         # self.capacities: list[int] = capacities
 
         # self.max_single_distance_enabled: bool = max_single_distance_enabled
-        self.max_total_distance: int = max_total_distance
-        self.time_limit: int = time_limit
-        self.solution_limit: int = solution_limit
+        self.max_total_distance: Optional[int] = max_total_distance
+        self.time_limit: Optional[int] = time_limit
+        self.solution_limit: Optional[int] = solution_limit
 
         self.manager = pywrapcp.RoutingIndexManager(
             # len(self.nodes),
