@@ -1,5 +1,10 @@
 from ortools.constraint_solver import routing_enums_pb2, pywrapcp
 
+from src.settings import (
+    MAX_TOTAL_DISTANCE,
+    SOLUTION_LIMIT,
+    TIME_LIMIT
+)
 
 class NoSolutionError(Exception):
     pass
@@ -30,9 +35,9 @@ class Solver:
         # capacities: list[int],
         # TODO: add global variables
         # max_single_distance_enabled: bool = True,  # MAX_SINGLE_DISTANCE_ENABLED
-        max_total_distance: int = 10_000_000,  # MAX_DISTANCE
-        time_limit: int = 60,  # TIME_LIMIT
-        solution_limit: int = 10_000_000,  # SOLUTION_LIMIT
+        max_total_distance: int = MAX_TOTAL_DISTANCE,
+        time_limit: int = TIME_LIMIT,
+        solution_limit: int = SOLUTION_LIMIT
     ) -> None:
         self.dist_matrix: list = dist_matrix
         self.amount: int = amount
