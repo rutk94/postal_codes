@@ -26,7 +26,7 @@ class PostalCodeData:
                 list of postal codes from data file
         """
 
-        codes_df: pd.DataFrame = pd.read_excel(self.path, usecols=self.colname)
+        codes_df: pd.DataFrame = pd.read_excel(self.path, usecols=[self.colname])
         codes: list[str] = codes_df[self.colname].tolist()
         return codes
 
