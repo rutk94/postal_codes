@@ -5,6 +5,7 @@ import matplotlib.pyplot as plt
 from pathlib import Path
 from typing import Optional, TYPE_CHECKING
 
+from src.settings import MAP_SHAPE_PATH
 from src.solver_ortools import Solver
 from src.vehicles import Vehicle
 
@@ -70,8 +71,8 @@ class Results:
 
     def get_map_result(
         self,
-        map_shape_path: Path,
         output_path: Path,
+        map_shape_path: Path = MAP_SHAPE_PATH,
         match_result_df: Optional[pd.DataFrame] = None,
         vehicle_id_colname: str = 'VEHICLE_NR',
         matched_code_colname: str = 'CASE_POSTAL_CODE',
@@ -80,10 +81,10 @@ class Results:
         Generates matching results as map plot.
 
         Args:
-            map_shape_path: Path
-                Path to map shape file in .geojson format
             output_path: Path
                 Path to output file.
+            map_shape_path: Path
+                Path to map shape file in .geojson format
             match_result_df: Optional[pd.DataFrame] = None
                 DataFrame object with matching results. If None, self.get_matching_result method is used
             vehicle_id_colname: str
@@ -173,7 +174,7 @@ class Results:
             if not output_path.exists():
                 Path.mkdir(output_path, parents=True)
 
-            output_path = output_path / 'wykres.png'
+            output_path = output_path / 'map.png'
 
         if output_path.suffix != '.png':
             raise ValueError(f'Wrong {output_path=}. Should be .png file.')
