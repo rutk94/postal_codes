@@ -16,6 +16,7 @@ ortools = "^9.12.4544"
 pydantic = "^2.10.6"
 geopandas = "^1.0.1"
 matplotlib = "^3.10.1"
+openpyxl = "^3.1.5"
 
 [tool.poetry.dev-dependencies]
 

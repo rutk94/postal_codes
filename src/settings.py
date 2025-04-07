@@ -7,6 +7,8 @@ from dotenv import load_dotenv
 load_dotenv(override=True)
 
 MAIN_PATH: Path = Path(__file__).parent.parent
+OUTPUT_DIR: Path = MAIN_PATH / 'output'
+
 POSTAL_CODES_PATH: Path = Path(
     os.getenv(
         'POSTAL_CODES_PATH', default=MAIN_PATH / 'resources' / 'lista-kodow-2018.xlsx'

@@ -69,6 +69,14 @@ docs = ["ipython", "matplotlib", "numpydoc", "sphinx"]
 tests = ["pytest", "pytest-cov", "pytest-xdist"]
 
 [[package]]
+name = "et-xmlfile"
+version = "2.0.0"
+description = "An implementation of lxml.xmlfile for the standard library"
+category = "main"
+optional = false
+python-versions = ">=3.8"
+
+[[package]]
 name = "exceptiongroup"
 version = "1.2.2"
 description = "Backport of PEP 654 (exception groups)"
@@ -213,6 +221,17 @@ description = "Fundamental package for array computing in Python"
 category = "main"
 optional = false
 python-versions = ">=3.10"
+
+[[package]]
+name = "openpyxl"
+version = "3.1.5"
+description = "A Python library to read/write Excel 2010 xlsx/xlsm files"
+category = "main"
+optional = false
+python-versions = ">=3.8"
+
+[package.dependencies]
+et-xmlfile = "*"
 
 [[package]]
 name = "ortools"
@@ -540,7 +559,7 @@ zstd = ["zstandard (>=0.18.0)"]
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.10"
-content-hash = "8ac56aa56b26b3e87fad06dea72671a58cfa9ddd56d1493d35cfe737a5061446"
+content-hash = "76f7cc2f54c4e045358c81495759056152aa0cc142f4e1c3e5f55abfa8506b2c"
 
 [metadata.files]
 absl-py = []
@@ -550,6 +569,7 @@ charset-normalizer = []
 colorama = []
 contourpy = []
 cycler = []
+et-xmlfile = []
 exceptiongroup = []
 fonttools = []
 geopandas = []
@@ -561,6 +581,7 @@ matplotlib = []
 mypy = []
 mypy-extensions = []
 numpy = []
+openpyxl = []
 ortools = []
 packaging = []
 pandas = []
