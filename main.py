@@ -1,5 +1,4 @@
 import time
-import pandas as pd
 from pathlib import Path
 
 from src.get_data import PostalCodeData
@@ -12,8 +11,12 @@ from src.settings import (
     OUTPUT_DIR,
     MAX_TOTAL_DISTANCE,
     SOLUTION_LIMIT,
-    TIME_LIMIT
+    TIME_LIMIT,
 )
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    import pandas as pd
 
 
 def main():
@@ -23,7 +26,9 @@ def main():
 
     # generate distance matrix
     dist_matrix_obj: DistanceMatrix = DistanceMatrix()
-    dist_matrix_df: pd.DataFrame = dist_matrix_obj.generate(codes=sample, set_index_enabled=True)
+    dist_matrix_df: pd.DataFrame = dist_matrix_obj.generate(
+        codes=sample, set_index_enabled=True
+    )
     codes: list[str] = dist_matrix_obj.proper_codes
 
     # get vehicles list
@@ -39,7 +44,7 @@ def main():
         ends=starts,
         max_total_distance=MAX_TOTAL_DISTANCE,
         time_limit=TIME_LIMIT,
-        solution_limit=SOLUTION_LIMIT
+        solution_limit=SOLUTION_LIMIT,
     )
 
     try:
@@ -49,11 +54,7 @@ def main():
         return
     else:
         # show results
-        results: Results = Results(
-            solver=solver,
-            vehicles=vehicles,
-            codes=codes
-        )
+        results: Results = Results(solver=solver, vehicles=vehicles, codes=codes)
         if not OUTPUT_DIR.exists():
             Path.mkdir(OUTPUT_DIR, parents=True)
         results.get_matching_result().to_excel(OUTPUT_DIR / 'matching.xlsx')

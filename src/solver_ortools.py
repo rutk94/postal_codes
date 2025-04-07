@@ -1,10 +1,7 @@
 from ortools.constraint_solver import routing_enums_pb2, pywrapcp
 
-from src.settings import (
-    MAX_TOTAL_DISTANCE,
-    SOLUTION_LIMIT,
-    TIME_LIMIT
-)
+from src.settings import MAX_TOTAL_DISTANCE, SOLUTION_LIMIT, TIME_LIMIT
+
 
 class NoSolutionError(Exception):
     pass

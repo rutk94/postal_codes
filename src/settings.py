@@ -15,9 +15,11 @@ POSTAL_CODES_PATH: Path = Path(
     )
 )
 MAP_SHAPE_PATH: Path = Path(
-    os.getenv(
-        'MAP_SHAPE_PATH', default=MAIN_PATH / 'resources' / 'map-shape.geojson'
-    )
+    os.getenv('MAP_SHAPE_PATH', default=MAIN_PATH / 'resources' / 'map-shape.geojson')
+)
+SEED: Optional[int] = get_integer_or_none('SEED')
+MAX_TOTAL_DISTANCE: Optional[int] = get_integer_or_none(
+    'MAX_TOTAL_DISTANCE', default=10_000_000
 )
 
 SEED_STR: str = str(os.getenv('SEED'))
