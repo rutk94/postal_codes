@@ -1,6 +1,7 @@
 import os
-from dotenv import load_dotenv
 from pathlib import Path
+from typing import Optional
+from dotenv import load_dotenv
 
 
 load_dotenv(override=True)
@@ -16,3 +17,5 @@ MAP_SHAPE_PATH: Path = Path(
         'MAP_SHAPE_PATH', default=MAIN_PATH / 'resources' / 'map-shape.geojson'
     )
 )
+SEED_STR: str = str(os.getenv('SEED'))
+SEED: Optional[int] = int(SEED_STR) if SEED_STR.isdigit() else None

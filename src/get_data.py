@@ -3,7 +3,7 @@ import numpy as np
 from pathlib import Path
 from typing import Optional
 
-from src.settings import POSTAL_CODES_PATH
+from src.settings import POSTAL_CODES_PATH, SEED
 
 
 class PostalCodeData:
@@ -31,7 +31,7 @@ class PostalCodeData:
         return codes
 
     def sample(
-        self, size: int, codes: Optional[list[str]] = None, seed: Optional[int] = 1234
+        self, size: int, codes: Optional[list[str]] = None, seed: Optional[int] = SEED
     ) -> list[str]:
         """
         Generates list of postal codes choosed randomly from codes_list.
@@ -40,7 +40,7 @@ class PostalCodeData:
                 Size of random sample list
             codes: list[str]
                 Entry list of postal codes to generate a sample from
-            seed: int
+            seed: Optional[int]
                 Random seed for sample generator
 
         Returns:
