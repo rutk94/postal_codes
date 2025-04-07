@@ -130,7 +130,7 @@ class Solver:
         self.solution = self.routing.SolveWithParameters(search_parameters)
 
         # return solution or raise error
-        if self.routing.status() == 1:
+        if self.solution:
             return self.solution
         else:
             # TODO: add dictionary of statuses from: developers.google.com/optimization/routing/routing_options
