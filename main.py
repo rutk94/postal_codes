@@ -3,7 +3,7 @@ from pathlib import Path
 
 from src.get_data import PostalCodeData
 from src.distmatrix import DistanceMatrix
-from src.vehicles import Vehicle, get_vehicles
+from src.vehicles import Vehicle, get_vehicles, get_capacities
 from src.solver_ortools import Solver, NoSolutionError
 from src.results import Results
 from src.settings import (
@@ -12,6 +12,7 @@ from src.settings import (
     MAX_TOTAL_DISTANCE,
     SOLUTION_LIMIT,
     TIME_LIMIT,
+    CAPACITY_FACTOR,
 )
 from typing import TYPE_CHECKING
 
@@ -35,6 +36,9 @@ def main():
     vehicle_codes: tuple[str, ...] = tuple(data.sample(size=20, codes=codes))
     vehicles: list[Vehicle] = get_vehicles(codes=codes, vehicle_codes=vehicle_codes)
     starts: list[str] = [vehicle.code_id for vehicle in vehicles]
+    capacities: list[int] = get_capacities(
+        amount_cases=len(codes), vehicles=vehicles, factor=CAPACITY_FACTOR
+    )
 
     # initiate solution
     solver: Solver = Solver(
@@ -42,6 +46,7 @@ def main():
         amount=len(vehicles),
         starts=starts,
         ends=starts,
+        capacities=capacities,
         max_total_distance=MAX_TOTAL_DISTANCE,
         time_limit=TIME_LIMIT,
         solution_limit=SOLUTION_LIMIT,
