@@ -3,8 +3,7 @@ from pathlib import Path
 from typing import Optional
 from dotenv import load_dotenv
 
-from src.settings_func import get_integer_or_none
-
+from src.settings_func import get_integer_or_none, get_float_or_none
 
 load_dotenv(override=True)
 
@@ -26,3 +25,4 @@ SOLUTION_LIMIT: Optional[int] = get_integer_or_none(
     'SOLUTION_LIMIT', default=10_000_000
 )
 TIME_LIMIT: Optional[int] = get_integer_or_none('TIME_LIMIT', default=60)
+CAPACITY_FACTOR: Optional[float] = get_float_or_none('CAPACITY_FACTOR', default=1.1)
