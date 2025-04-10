@@ -34,8 +34,14 @@ def setup_solver() -> Solver:
     starts: list[int] = [1, 2, 15, 16]
     ends: list[int] = [1, 2, 15, 16]
     amount: int = len(starts)
+    capacities: list[int] = [15, 15, 15, 15]
     solver: Solver = Solver(
-        dist_matrix=dist_matrix, amount=amount, starts=starts, ends=ends, time_limit=30
+        dist_matrix=dist_matrix,
+        amount=amount,
+        starts=starts,
+        ends=ends,
+        capacities=capacities,
+        time_limit=30,
     )
     solver.solve()
     return solver

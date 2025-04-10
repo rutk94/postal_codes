@@ -30,7 +30,7 @@ class Solver:
         starts: list,
         ends: list,
         # nodes: list,
-        # capacities: list[int],
+        capacities: list[int],
         # TODO: add global variables
         # max_single_distance_enabled: bool = True,  # MAX_SINGLE_DISTANCE_ENABLED
         max_total_distance: Optional[int] = MAX_TOTAL_DISTANCE,
@@ -42,7 +42,7 @@ class Solver:
         self.starts: list = starts
         self.ends: list = ends
         # self.nodes: list = nodes
-        # self.capacities: list[int] = capacities
+        self.capacities: list[int] = capacities
 
         # self.max_single_distance_enabled: bool = max_single_distance_enabled
         self.max_total_distance: Optional[int] = max_total_distance
@@ -85,12 +85,12 @@ class Solver:
             self._distance_callback(to_index, from_index),
         )
 
-    # def _demand_callback(self, from_index):
-    #     """Returns demand at given point"""
-    #     # TODO: finish function
-    #     from_node = self.manager.IndexToNode(from_index)
-    #     # return self.nodes[from_node].demand_weight
-    #     pass
+    def _demand_callback(self, from_index):
+        """Returns demand at given point"""
+        # TODO: finish function
+        # from_node = self.manager.IndexToNode(from_index)
+        # return self.nodes[from_node].demand_weight
+        return 1
 
     def solve(self):
         # add distance dimension
@@ -108,15 +108,17 @@ class Solver:
         distance_dimension = self.routing.GetDimensionOrDie('distance')
         distance_dimension.SetGlobalSpanCostCoefficient(100)
 
-        # # add capacity dimension
-        # demand_callback_index = self.routing.RegisterUnaryTransitCallback(self._demand_callback)
-        # self.routing.AddDimensionWithVehicleCapacity(
-        #     evaluator_index=demand_callback_index,
-        #     slack_max=0,
-        #     vehicle_capacities=self.capacities,
-        #     fix_start_cumul_to_zero=True,
-        #     name='capacity'
-        # )
+        # add capacity dimension
+        demand_callback_index = self.routing.RegisterUnaryTransitCallback(
+            self._demand_callback
+        )
+        self.routing.AddDimensionWithVehicleCapacity(
+            evaluator_index=demand_callback_index,
+            slack_max=0,
+            vehicle_capacities=self.capacities,
+            fix_start_cumul_to_zero=True,
+            name='capacity',
+        )
 
         # define parameters
         search_parameters = pywrapcp.DefaultRoutingSearchParameters()
