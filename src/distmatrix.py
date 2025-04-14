@@ -81,7 +81,6 @@ class DistanceMatrix:
         codes: list[str],
         dist_unit: Literal['km', 'm'] = 'm',
         codes_col: str = 'KOD_POCZ',
-        set_index_enabled: bool = False,
     ) -> pd.DataFrame:
         """
         Generates symmetrical matrix including distances between postal codes, as DataFrame object.
@@ -93,8 +92,7 @@ class DistanceMatrix:
                 Unit of calculated distances: 'km' - kilometers, 'm' - meters
             codes_col: str = 'KOD_POCZ'
                 Name of 1st column including postal codes
-            set_index_enabled: bool = False
-                If you need to represent postal codes as index
+
         Returns:
             matrix_df: pd.DataFrame
                 Matrix of distances between postal codes
@@ -138,8 +136,8 @@ class DistanceMatrix:
         matrix_df: pd.DataFrame = pd.DataFrame(matrix, columns=codes, dtype='int32')
         matrix_df.insert(0, codes_col, codes)
 
-        if set_index_enabled:
-            matrix_df.set_index(codes_col, inplace=True)
+        # set column with postal codes as index
+        matrix_df.set_index(codes_col, inplace=True)
 
         self.df = matrix_df.copy()
 
