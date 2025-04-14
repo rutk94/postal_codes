@@ -3,7 +3,8 @@ from pathlib import Path
 
 from src.get_data import PostalCodeData
 from src.distmatrix import DistanceMatrix
-from src.vehicles import Vehicle, get_vehicles, get_capacities
+from src.vehicles import Vehicle, get_vehicles, get_capacities, set_possible_codes
+from src.nodes import Node, get_nodes
 from src.solver_ortools import Solver, NoSolutionError
 from src.results import Results
 from src.settings import (
@@ -21,23 +22,42 @@ if TYPE_CHECKING:
 
 
 def main():
-    # get postal codes data
+    # get data
     data: PostalCodeData = PostalCodeData(path=POSTAL_CODES_PATH)
     sample: list[str] = sorted(set(data.sample(size=300)))
+    vehicle_codes: tuple[str, ...] = tuple(data.sample(size=20, seed=4321))
 
     # generate distance matrix
     dist_matrix_obj: DistanceMatrix = DistanceMatrix()
     dist_matrix_df: pd.DataFrame = dist_matrix_obj.generate(
-        codes=sample, set_index_enabled=True
+        codes=sample + list(vehicle_codes)
     )
+
+    # get proper postal codes
     codes: list[str] = dist_matrix_obj.proper_codes
+    vehicle_codes = tuple([code for code in vehicle_codes if code in codes])
 
     # get vehicles list
-    vehicle_codes: tuple[str, ...] = tuple(data.sample(size=20, codes=codes))
-    vehicles: list[Vehicle] = get_vehicles(codes=codes, vehicle_codes=vehicle_codes)
-    starts: list[str] = [vehicle.code_id for vehicle in vehicles]
-    capacities: list[int] = get_capacities(
+    vehicles: list[Vehicle] = get_vehicles(
+        codes=codes, vehicle_codes=vehicle_codes, dist_matrix=dist_matrix_obj
+    )
+    starts: list[str] = [vehicle.matrix_id for vehicle in vehicles]
+    get_capacities(
         amount_cases=len(codes), vehicles=vehicles, factor=CAPACITY_FACTOR
+    )
+    capacities: list[int] = [vehicle.capacity for vehicle in vehicles]
+
+    # set possible codes for each vehicle
+    set_possible_codes(
+        vehicles=vehicles,
+        dist_matrix=dist_matrix_df
+    )
+
+    # get nodes list
+    nodes: list[Node] = get_nodes(
+        codes=codes,
+        vehicles=vehicles,
+        dist_matrix=dist_matrix_obj
     )
 
     # initiate solution
@@ -46,6 +66,7 @@ def main():
         amount=len(vehicles),
         starts=starts,
         ends=starts,
+        nodes=nodes,
         capacities=capacities,
         max_total_distance=MAX_TOTAL_DISTANCE,
         time_limit=TIME_LIMIT,
@@ -53,7 +74,7 @@ def main():
     )
 
     try:
-        _ = solver.solve()
+        solver.solve()
     except NoSolutionError:
         print('No solution!')
         return
