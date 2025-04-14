@@ -1,5 +1,6 @@
 import time
 from pathlib import Path
+from typing import TYPE_CHECKING
 
 from src.get_data import PostalCodeData
 from src.distmatrix import DistanceMatrix
@@ -15,7 +16,6 @@ from src.settings import (
     TIME_LIMIT,
     CAPACITY_FACTOR,
 )
-from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
     import pandas as pd
