@@ -54,7 +54,7 @@ class Results:
         all_codes: list[str] = []
         for i in range(len(self.vehicles)):
             index = self.solver.routing.Start(i)
-            nr: int = self.vehicles[i].nr
+            nr: int = self.vehicles[i].vehicle_id
 
             while not self.solver.routing.IsEnd(index):
                 node_index: int = self.solver.manager.IndexToNode(index)
@@ -124,7 +124,7 @@ class Results:
         )
 
         # vehicles codes geopoints
-        vehicles_id_list: list[int] = [vehicle.nr for vehicle in self.vehicles]
+        vehicles_id_list: list[int] = [vehicle.vehicle_id for vehicle in self.vehicles]
         vehicles_df: pd.DataFrame = pd.DataFrame({vehicle_id_colname: vehicles_id_list})
         vehicles_codes_list: list[str] = [vehicle.code for vehicle in self.vehicles]
         vehicles_df[['latitude', 'longitude']] = nomi.query_postal_code(
