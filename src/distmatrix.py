@@ -10,7 +10,7 @@ from typing import Literal
 class DistanceMatrix:
     def __init__(self) -> None:
         # placeholders
-        self.df: pd.DataFrame = pd.DataFrame()
+        self.df: pd.DataFrame = pd.DataFrame()  # set while calling generate()
         self.proper_codes: list[str] = []
         self.wrong_format_codes: list[str] = []
         self.unknown_codes: list[str] = []
@@ -85,6 +85,7 @@ class DistanceMatrix:
     ) -> pd.DataFrame:
         """
         Generates symmetrical matrix including distances between postal codes, as DataFrame object.
+
         Args:
             codes: list[str]
                 List of postal codes
@@ -95,7 +96,11 @@ class DistanceMatrix:
             set_index_enabled: bool = False
                 If you need to represent postal codes as index
         Returns:
+            matrix_df: pd.DataFrame
+                Matrix of distances between postal codes
 
+        Sets attributes:
+            self.df: pd.DataFrame = matrix_df.copy()
         """
         # check provided distance unit
         if dist_unit.lower() not in ['km', 'm']:

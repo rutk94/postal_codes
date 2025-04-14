@@ -15,9 +15,9 @@ def get_integer_or_none(variable_name: str) -> Optional[int]:
             Loaded environment variable as integer or None
     """
 
-    value = None
+    value: Optional[int] = None
     if os.getenv(variable_name):
-        value: int = get_integer_or_die(variable_name)
+        value = get_integer_or_die(variable_name)
 
     return value
 
