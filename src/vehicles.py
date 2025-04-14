@@ -71,15 +71,14 @@ def get_vehicles(
     return vehicles
 
 
-def get_capacities(
+def set_capacities(
     amount_cases: int,
     vehicles: list[Vehicle],
     # max_demand: int
     factor: float = CAPACITY_FACTOR,
 ) -> list[int]:
     """
-    Returns a list of capacity values for each vehicle,
-    calculated using the following operation:
+    Sets a capacity value for each vehicle, calculated using the following operation:
 
     amount_cases / len(vehicles) * factor
 
@@ -95,10 +94,9 @@ def get_capacities(
         factor: float
             Constant factor used to loosen the range of possibilities
 
-    Returns:
-        capacities: list[int]
-            List of capacity values for each vehicle
-            in order according to Vehicle objects list "vehicles"
+    Sets attributes:
+        vehicle.capacity: int
+            A capacity value for Vehicle
     """
 
     # calculate capacity
@@ -111,11 +109,6 @@ def get_capacities(
     # actualize Vehicle attribute
     for vehicle in vehicles:
         vehicle.capacity = value
-
-    # # generate capacities list
-    # capacities: list[int] = [vehicle.capacity for vehicle in vehicles]
-    #
-    # return capacities
 
 
 def set_possible_codes(
@@ -131,16 +124,12 @@ def set_possible_codes(
         dist_matrix: pd.DataFrame
             Distance matrix as dataframe
 
-    Returns:
-        actualized_vehicles: list[Vehicle]
-            List of actualized vehicles objects
-
     Sets attributes:
         vehicle.possible_codes: list[str]
+            List of postal codes which fits in maximum distance range
     """
     vehicle_codes: list[str] = [vehicle.code for vehicle in vehicles]
 
-    actualized_vehicles: list[Vehicle] = []
     for vehicle in vehicles:
         code: str = vehicle.code
         max_dist: int = vehicle.max_dist_from_home
@@ -162,7 +151,3 @@ def set_possible_codes(
         # set possible codes for vehicle
         possible_codes: list[str] = list(vehicle_limited_distances.index)
         vehicle.possible_codes += possible_codes
-
-        actualized_vehicles.append(vehicle)
-
-    # return actualized_vehicles
