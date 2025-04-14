@@ -3,7 +3,7 @@ from pathlib import Path
 
 from src.get_data import PostalCodeData
 from src.distmatrix import DistanceMatrix
-from src.vehicles import Vehicle, get_vehicles, get_capacities, set_possible_codes
+from src.vehicles import Vehicle, get_vehicles, set_capacities, set_possible_codes
 from src.nodes import Node, get_nodes
 from src.solver_ortools import Solver, NoSolutionError
 from src.results import Results
@@ -42,7 +42,9 @@ def main():
         codes=codes, vehicle_codes=vehicle_codes, dist_matrix=dist_matrix_obj
     )
     starts: list[str] = [vehicle.matrix_id for vehicle in vehicles]
-    get_capacities(
+
+    # set capacities for each vehicle
+    set_capacities(
         amount_cases=len(codes), vehicles=vehicles, factor=CAPACITY_FACTOR
     )
     capacities: list[int] = [vehicle.capacity for vehicle in vehicles]
