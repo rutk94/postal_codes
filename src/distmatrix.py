@@ -139,3 +139,33 @@ class DistanceMatrix:
         self.df = matrix_df.copy()
 
         return matrix_df
+
+    def get_matrix_id(self, code: str) -> int:
+        """
+        Returns positional number (id) of given code in distance matrix dataframe.
+
+        Args:
+            code: str
+                Postal code to find in distance matrix dataframe
+
+        Returns:
+            matrix_id: int
+                Positional number (id) of given code
+
+        Raises:
+            AttributeError - if dataframe doesn't exist yet.
+            ValueError - if given code doesn't exist in distance matrix
+        """
+        if self.df.equals(pd.DataFrame()):
+            raise AttributeError(
+                "DistanceMatrix dataframe doesn't exist yet. "
+                'Use method "DistanceMatrix.generate()" to create a dataframe.'
+            )
+
+        dist_matrix_codes: list[str] = list(self.df.columns)
+        if code not in dist_matrix_codes:
+            raise ValueError(f'{code=} not in DistanceMatrix codes.')
+
+        matrix_id: int = dist_matrix_codes.index(code)
+
+        return matrix_id
