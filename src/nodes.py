@@ -13,6 +13,25 @@ class Node:
         is_case: bool,
         possible_vehicles: list[Vehicle],
     ) -> None:
+        """
+        Represents Node object.
+
+        Args:
+            node_id: int
+                Node identity number
+            matrix_id: inr
+                Node index number in distance matrix
+            code: str
+                Postal code of Node
+            demand: int
+                Amount of cases in Node
+            is_vehicle: bool
+                True / False if Node is vehicle
+            is_case: bool
+                True / False if Node is case
+            possible_vehicles: list[Vehicle]
+                List of Vehicle objects available for Node
+        """
         self.node_id: int = node_id
         self.matrix_id: int = matrix_id
         self.code: str = code
@@ -25,6 +44,21 @@ class Node:
 def get_nodes(
     codes: list[str], vehicles: list[Vehicle], dist_matrix: DistanceMatrix
 ) -> list[Node]:
+    """
+    Returns a list of Node objects.
+
+    Args:
+        codes: list[str]
+            List of postal codes
+        vehicles: list[Vehicle]
+            List of Vehicle objects
+        dist_matrix: DistanceMatrix
+            DistanceMatrix object
+
+    Returns:
+        nodes: List[Node]
+            List of Node objects
+    """
     vehicle_codes: list[str] = [vehicle.code for vehicle in vehicles]
 
     nodes: list[Node] = []
