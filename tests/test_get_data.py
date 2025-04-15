@@ -5,12 +5,12 @@ from src.get_data import PostalCodeData
 from tests.setup import setup_codes
 
 
-@fixture()
+@fixture(scope='module')
 def setup_obj(setup_codes: list[str], monkeypatch) -> PostalCodeData:
     mock_get_list = MagicMock(return_value=setup_codes)
     monkeypatch.setattr('src.get_data.PostalCodeData.get_list', mock_get_list)
     data: PostalCodeData = PostalCodeData(path='whatever.xlsx', colname='any_name')
-    return data
+    yield data
 
 
 def test_get_list(setup_obj: PostalCodeData, setup_codes: list[str]) -> None:

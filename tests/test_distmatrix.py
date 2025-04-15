@@ -17,7 +17,7 @@ def setup_obj(setup_codes: list[str]) -> DistanceMatrix:
     _: pd.DataFrame = distmatrix.generate(
         codes=proper_codes, dist_unit='m', codes_col='kod'
     )
-    return distmatrix
+    yield distmatrix
 
 
 def test_codes_checker(setup_codes: list[str]) -> None:

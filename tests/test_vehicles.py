@@ -10,7 +10,7 @@ if TYPE_CHECKING:
     import pandas as pd
 
 
-@fixture
+@fixture(scope='session')
 def setup_vehicles(
     setup_codes: list[str],
     setup_vehicle_codes: tuple[str, ...],
@@ -21,7 +21,7 @@ def setup_vehicles(
         vehicle_codes=setup_vehicle_codes,
         dist_matrix=setup_distmatrix
     )
-    return vehicles
+    yield vehicles
 
 
 def test_get_vehicles(setup_vehicles: list[Vehicle], setup_codes: list[str]) -> None:

@@ -7,7 +7,7 @@ Solution = Any
 @fixture(scope='session')
 def setup_codes() -> list[str]:
     # **DO NOT** change order
-    return [
+    yield [
         '05-080',  # 1 (0)
         '05-152',  # 2 (1) - vehicle
         '05-500',  # 3 (2) - vehicle
@@ -30,9 +30,9 @@ def setup_codes() -> list[str]:
     ]
 
 
-@fixture(scope='session')
+@fixture(scope='module')
 def setup_vehicle_codes() -> tuple[str, ...]:
-    return (
+    yield (
         '05-152',  # 2 (1) - vehicle
         '05-500',  # 3 (2) - vehicle
         '67-300',  # 16 (15) - vehicle
@@ -74,7 +74,7 @@ def setup_solver_data() -> dict[str, Any]:
         'amount': amount,
         'capacities': capacities,
     }
-    return solver_data
+    yield solver_data
 
 
 # @fixture(scope='session')
