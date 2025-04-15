@@ -59,7 +59,7 @@ def test_get_integer_or_die_raises_value_error(
 
 
 @mark.parametrize('value, default', [('10', None), ('10_000.0', None), (None, 100.0)])
-def test_get_float_or_die_returns_int(
+def test_get_float_or_die_returns_float(
     value: Optional[str], default: Optional[float], monkeypatch
 ) -> None:
     var_name: str = 'FLOAT_VARIABLE'
