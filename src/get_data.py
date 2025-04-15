@@ -15,9 +15,9 @@ class PostalCodeData:
             self.path = Path(self.path)
 
         self.colname: str = colname
-        self.all_codes: list[str] = self.get_list()
+        self.all_codes: list[str] = self._get_list()
 
-    def get_list(self) -> list[str]:
+    def _get_list(self) -> list[str]:
         """
         Returns all postal codes from data file.
 
