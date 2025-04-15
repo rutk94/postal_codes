@@ -1,8 +1,6 @@
 from pytest import fixture
 from typing import Any
 
-# TODO: define solution type
-Solution = Any
 
 @fixture(scope='session')
 def setup_codes() -> list[str]:
@@ -30,7 +28,7 @@ def setup_codes() -> list[str]:
     ]
 
 
-@fixture(scope='module')
+@fixture(scope='session')
 def setup_vehicle_codes() -> tuple[str, ...]:
     yield (
         '05-152',  # 2 (1) - vehicle
@@ -75,11 +73,3 @@ def setup_solver_data() -> dict[str, Any]:
         'capacities': capacities,
     }
     yield solver_data
-
-
-# @fixture(scope='session')
-# def setup_solution(setup_solver_data: dict[str, Any]) -> Solution:
-#     solver: Solver = Solver(
-#         dist_matrix=setup_solver_data['dist_matrix'],
-#         amount=setup_solver_data['amount']
-#     )
