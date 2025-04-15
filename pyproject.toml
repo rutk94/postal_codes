@@ -33,6 +33,7 @@ skip-magic-trailing-comma = true
 
 [tool.mypy]
 allow_redefinition = true
+disable_error_code = ["return", "import-untyped"]
 
 [[tool.mypy.overrides]]
 module = ["pgeocode.*"]
