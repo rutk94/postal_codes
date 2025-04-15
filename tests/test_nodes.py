@@ -8,7 +8,7 @@ from tests.test_distmatrix import setup_obj as setup_distmatrix
 from tests.setup import setup_codes, setup_vehicle_codes    # noqa
 
 
-@fixture(scope='module')
+@fixture(scope='session')
 def setup_nodes(
     setup_codes: list[str],
     setup_vehicles: list[Vehicle],
