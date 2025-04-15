@@ -3,10 +3,10 @@ from unittest.mock import MagicMock
 from typing import Any
 
 from src.solver_ortools import Solver, NoSolutionError
-from tests.test_nodes import Node, setup_nodes
+from tests.test_nodes import Node, setup_nodes  # noqa
 from tests.test_vehicles import setup_vehicles  # noqa
-from tests.test_distmatrix import setup_obj as setup_distmatrix # noqa
-from tests.setup import setup_solver_data, setup_codes, setup_vehicle_codes # noqa
+from tests.test_distmatrix import setup_obj as setup_distmatrix  # noqa
+from tests.setup import setup_solver_data, setup_codes, setup_vehicle_codes  # noqa
 
 
 @fixture(scope='session')
@@ -23,10 +23,11 @@ def setup_solver(
         max_single_distance_enabled=request,
         max_total_distance=10_000_000,
         time_limit=10,  # duration on fixture creation
-        solution_limit=10_000_000
+        solution_limit=10_000_000,
     )
     solver.solve()
-    yield solver
+    return solver
+
 
 @mark.parametrize('setup_solver', [[True, False]], indirect=True)
 def test_solve(setup_solver: Solver) -> None:

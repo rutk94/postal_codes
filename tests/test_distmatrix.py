@@ -5,10 +5,11 @@ from pytest import fixture, mark, raises
 from typing import TYPE_CHECKING, Literal, Any
 
 from src.distmatrix import DistanceMatrix
-from tests.setup import setup_codes
+from tests.setup import setup_codes  # noqa
 
 if TYPE_CHECKING:
     import pandas as pd
+
 
 @fixture(scope='session')
 def setup_obj(setup_codes: list[str]) -> DistanceMatrix:
@@ -17,7 +18,7 @@ def setup_obj(setup_codes: list[str]) -> DistanceMatrix:
     _: pd.DataFrame = distmatrix.generate(
         codes=proper_codes, dist_unit='m', codes_col='kod'
     )
-    yield distmatrix
+    return distmatrix
 
 
 def test_codes_checker(setup_codes: list[str]) -> None:

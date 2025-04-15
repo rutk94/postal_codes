@@ -5,7 +5,7 @@ from typing import Any
 @fixture(scope='session')
 def setup_codes() -> list[str]:
     # **DO NOT** change order
-    yield [
+    return [
         '05-080',  # 1 (0)
         '05-152',  # 2 (1) - vehicle
         '05-500',  # 3 (2) - vehicle
@@ -30,7 +30,7 @@ def setup_codes() -> list[str]:
 
 @fixture(scope='session')
 def setup_vehicle_codes() -> tuple[str, ...]:
-    yield (
+    return (
         '05-152',  # 2 (1) - vehicle
         '05-500',  # 3 (2) - vehicle
         '67-300',  # 16 (15) - vehicle
@@ -72,4 +72,4 @@ def setup_solver_data() -> dict[str, Any]:
         'amount': amount,
         'capacities': capacities,
     }
-    yield solver_data
+    return solver_data

@@ -2,20 +2,20 @@ from pytest import fixture, raises
 from unittest.mock import MagicMock
 
 from src.get_data import PostalCodeData
-from tests.setup import setup_codes
+from tests.setup import setup_codes  # noqa
 
 
-@fixture(scope='module')
+@fixture
 def setup_obj(setup_codes: list[str], monkeypatch) -> PostalCodeData:
     mock_get_list = MagicMock(return_value=setup_codes)
-    monkeypatch.setattr('src.get_data.PostalCodeData.get_list', mock_get_list)
+    monkeypatch.setattr('src.get_data.PostalCodeData._get_list', mock_get_list)
     data: PostalCodeData = PostalCodeData(path='whatever.xlsx', colname='any_name')
-    yield data
+    return data
 
 
 def test_get_list(setup_obj: PostalCodeData, setup_codes: list[str]) -> None:
     data: PostalCodeData = setup_obj
-    codes = data.get_list()
+    codes: list[str] = data.all_codes
     assert isinstance(codes, list)
     assert codes == setup_codes
 

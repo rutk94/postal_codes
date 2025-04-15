@@ -3,8 +3,8 @@ from typing import TYPE_CHECKING
 
 from src.distmatrix import DistanceMatrix
 from src.vehicles import Vehicle, get_vehicles, set_capacities, set_possible_codes
-from tests.setup import setup_codes, setup_vehicle_codes
-from tests.test_distmatrix import setup_obj as setup_distmatrix
+from tests.test_distmatrix import setup_obj as setup_distmatrix  # noqa
+from tests.setup import setup_codes, setup_vehicle_codes  # noqa
 
 if TYPE_CHECKING:
     import pandas as pd
@@ -14,14 +14,14 @@ if TYPE_CHECKING:
 def setup_vehicles(
     setup_codes: list[str],
     setup_vehicle_codes: tuple[str, ...],
-    setup_distmatrix: DistanceMatrix
+    setup_distmatrix: DistanceMatrix,
 ) -> list[Vehicle]:
     vehicles: list[Vehicle] = get_vehicles(
         codes=setup_codes,
         vehicle_codes=setup_vehicle_codes,
-        dist_matrix=setup_distmatrix
+        dist_matrix=setup_distmatrix,
     )
-    yield vehicles
+    return vehicles
 
 
 def test_get_vehicles(setup_vehicles: list[Vehicle], setup_codes: list[str]) -> None:
@@ -36,15 +36,15 @@ def test_get_vehicles(setup_vehicles: list[Vehicle], setup_codes: list[str]) -> 
 
 
 def test_set_capacities(setup_vehicles: list[Vehicle]) -> None:
-    set_capacities(
-        amount_cases=100, vehicles=setup_vehicles, factor=1.1
-    )
+    set_capacities(amount_cases=100, vehicles=setup_vehicles, factor=1.1)
     capacities: list[int] = [vehicle.capacity for vehicle in setup_vehicles]
 
     assert len(capacities) != 0
     assert len(capacities) == len(setup_vehicles)
     assert all(isinstance(value, int) for value in capacities)
-    assert all(capacities[i] == setup_vehicles[i].capacity for i in range(len(capacities)))
+    assert all(
+        capacities[i] == setup_vehicles[i].capacity for i in range(len(capacities))
+    )
 
     # check if all capacities are equal
     assert len(set(capacities)) == 1
@@ -53,7 +53,7 @@ def test_set_capacities(setup_vehicles: list[Vehicle]) -> None:
 def test_set_possible_codes(
     setup_vehicles: list[Vehicle],
     setup_codes: list[str],
-    setup_distmatrix: DistanceMatrix
+    setup_distmatrix: DistanceMatrix,
 ) -> None:
     dist_matrix: pd.DataFrame = DistanceMatrix().generate(codes=setup_codes)
     set_possible_codes(vehicles=setup_vehicles, dist_matrix=dist_matrix)
