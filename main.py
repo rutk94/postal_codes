@@ -20,6 +20,7 @@ from src.settings import (
 if TYPE_CHECKING:
     import pandas as pd
 
+# TODO: refactor docstrings to Google type
 
 def main():
     # get data

@@ -7,12 +7,10 @@ def get_integer_or_none(variable_name: str) -> Optional[int]:
     Ensures that loaded environment variable is an integer if it exist.
 
     Args:
-        variable_name: str
-            Name of environment variable
+        variable_name (str): Name of environment variable
 
     Returns:
-        value: Optional[int]
-            Loaded environment variable as integer or None
+        value (Optional[int]): Loaded environment variable as integer or None
     """
 
     value: Optional[int] = None
@@ -28,17 +26,14 @@ def get_integer_or_die(variable_name: str, default: Optional[int] = None) -> int
     Otherwise it raises an error.
 
     Args:
-        variable_name: str
-            Name of environment variable
-        default: Optional[int] = None
-            Default value of environment variable
+        variable_name (str): Name of environment variable
+        default (Optional[int]): Default value of environment variable
 
     Returns:
-        value: int
-            Integer type value of environment variable
+        value (int): Integer type value of environment variable
 
     Raises:
-        ValueError - if environment variable string is not numeric
+        ValueError: If environment variable string is not numeric
             or default value type is not an integer
     """
 
@@ -63,17 +58,14 @@ def get_float_or_die(variable_name: str, default: Optional[float] = None) -> flo
     Otherwise it raises an error.
 
     Args:
-        variable_name: str
-            Name of environment variable
-        default: Optional[float] = None
-            Default value of environment variable
+        variable_name (str): Name of environment variable
+        default (Optional[float]): Default value of environment variable
 
     Returns:
-        value: float
-            Integer type value of environment variable
+        value (float): Integer type value of environment variable
 
     Raises:
-        ValueError - if environment variable string is not numeric
+        ValueError: If environment variable string is not numeric
             or default value type is not a float
     """
 

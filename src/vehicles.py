@@ -13,16 +13,18 @@ class Vehicle:
     Represents vehicle attributes.
 
     Attributes:
-        vehicle_id: int
-            Number of vehicle
-        code: str
-            Postal code of vehicle
-        code_id: int
-            Index number of vehicle postal code in the list of all postal codes
+        vehicle_id (int): Number of vehicle
+        code (str): Postal code of vehicle
+        code_id (int): Index number of vehicle postal code in the list of all postal codes
     """
 
     def __init__(
-        self, vehicle_id: int, code: str, code_id: int, matrix_id: int, max_dist_from_home: int
+        self,
+        vehicle_id: int,
+        code: str,
+        code_id: int,
+        matrix_id: int,
+        max_dist_from_home: int,
     ) -> None:
         self.vehicle_id: int = vehicle_id
         self.code: str = code
@@ -32,7 +34,9 @@ class Vehicle:
 
         # placeholders
         self.capacity: int = 0  # set by calling get_capacities()
-        self.possible_codes: list[str] = [code]  # expanded by calling set_possible_codes()
+        self.possible_codes: list[str] = [
+            code
+        ]  # expanded by calling set_possible_codes()
 
 
 def get_vehicles(
@@ -42,15 +46,11 @@ def get_vehicles(
     Returns list of Vehicle objects.
 
     Args:
-        codes: list[str]
-            List of all postal codes
-        vehicle_codes: tuple[str, ...]
-            List of vehicles postal codes
-        dist_matrix: DistanceMatrix
-            Distances matrix object
+        codes (list[str]): List of all postal codes
+        vehicle_codes (tuple[str, ...]): List of vehicles postal codes
+        dist_matrix (DistanceMatrix): Distances matrix object
     Returns:
-        vehicles: list[Vehicle]
-            List of Vehicle objects
+        vehicles (list[Vehicle]): List of Vehicle objects
     """
 
     vehicles: list[Vehicle] = []
@@ -80,23 +80,19 @@ def set_capacities(
     """
     Sets a capacity value for each vehicle, calculated using the following operation:
 
-    amount_cases / len(vehicles) * factor
+        amount_cases / len(vehicles) * factor
 
     The result is rounded up and changed to "integer" type.
     Each vehicle gets an equal capacity.
     Vehicle objects gets the new attribute 'capacity'.
 
     Args:
-        amount_cases: int
-            Amount of all cases
-        vehicles: list[Vehicle]
-            List of Vehicle objects
-        factor: float
-            Constant factor used to loosen the range of possibilities
+        amount_cases (int): Amount of all cases
+        vehicles (list[Vehicle]): List of Vehicle objects
+        factor (float): Constant factor used to loosen the range of possibilities
 
     Sets attributes:
-        vehicle.capacity: int
-            A capacity value for Vehicle
+        Vehicle.capacity (int): A capacity value for Vehicle
     """
 
     # calculate capacity
@@ -119,15 +115,13 @@ def set_possible_codes(
     If vehicle.possible_codes is already filled, the vehicle is being omitted.
 
     Args:
-        vehicles: list[Vehicle]
-            List of vehicles objects
-        dist_matrix: pd.DataFrame
-            Distance matrix as dataframe
+        vehicles (list[Vehicle]): List of vehicles objects
+        dist_matrix (pd.DataFrame): Distance matrix as dataframe
 
     Sets attributes:
-        vehicle.possible_codes: list[str]
-            List of postal codes which fits in maximum distance range
+        vehicle.possible_codes (list[str]): List of postal codes which fits in maximum distance range
     """
+
     vehicle_codes: list[str] = [vehicle.code for vehicle in vehicles]
 
     for vehicle in vehicles:

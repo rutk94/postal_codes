@@ -7,6 +7,7 @@ from src.vehicles import Vehicle, get_vehicles
 from src.results import Results
 from src.settings import MAP_SHAPE_PATH
 
+# TODO: adjust to last changes
 
 @fixture(scope='session')
 def setup_solver() -> Solver:

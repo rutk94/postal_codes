@@ -4,6 +4,9 @@ from typing import Optional
 from src.settings import MAX_TOTAL_DISTANCE, SOLUTION_LIMIT, TIME_LIMIT
 
 
+Solution = pywrapcp.RoutingModel.SolveWithParameters
+
+
 class NoSolutionError(Exception):
     pass
 
@@ -13,14 +16,12 @@ class Solver:
     Represents ORtools constraint solver
 
     Attributes:
-        dist_matrix: list
-            Matrix of distances between postal codes
-        amount: int
-            Amount of vehicles
-        starts: list
-            List of integers representing ordinal numbers of the postal codes for the starting points of vehicles in the distance matrix
-        ends: list
-            List of integers representing ordinal numbers of the postal codes for the ending points of vehicles in the distance matrix
+        dist_matrix (list): Matrix of distances between postal codes
+        amount (int): Amount of vehicles
+        starts (list): List of integers representing ordinal numbers
+            of the postal codes for the starting points of vehicles in the distance matrix
+        ends (list): List of integers representing ordinal numbers
+            of the postal codes for the ending points of vehicles in the distance matrix
     """
 
     def __init__(
@@ -43,7 +44,7 @@ class Solver:
         self.nodes: list = nodes
         self.capacities: list[int] = capacities
 
-        # self.max_single_distance_enabled: bool = max_single_distance_enabled
+        self.max_single_distance_enabled: bool = max_single_distance_enabled
         self.max_total_distance: Optional[int] = max_total_distance
         self.time_limit: Optional[int] = time_limit
         self.solution_limit: Optional[int] = solution_limit
@@ -57,28 +58,26 @@ class Solver:
         )
         self.routing = pywrapcp.RoutingModel(self.manager)
 
-        if max_single_distance_enabled:
+        if self.max_single_distance_enabled:
             # vehicles_ids: list[int] = [node.matrix_id for node in self.nodes if node.is_vehicle ]
             for node in self.nodes:
                 self.routing.SetAllowedVehiclesForIndex(
                     # vehicles=node.possible_vehicles,
                     # vehicles=[vehicle.matrix_id for vehicle in node.possible_vehicles],
                     vehicles=[vehicle.vehicle_id for vehicle in node.possible_vehicles],
-                    index=self.manager.NodeToIndex(node.node_id)
+                    index=self.manager.NodeToIndex(node.node_id),
                 )
 
         # placeholder
-        self.solution = None
+        self.solution: Solution = None
 
     def _distance_callback(self, from_index, to_index):
         """Returns distance between two points"""
-        # TODO: finish function
         from_node = self.manager.IndexToNode(from_index)
         to_node = self.manager.IndexToNode(to_index)
         index_from = self.nodes[from_node].matrix_id
         index_to = self.nodes[to_node].matrix_id
         return self.dist_matrix[index_from][index_to]
-        # return self.dist_matrix[from_node][to_node]
 
     def _distance_callback_symmetrical(self, from_index, to_index):
         """Returns minimal distance between two points"""
@@ -89,12 +88,11 @@ class Solver:
 
     def _demand_callback(self, from_index):
         """Returns demand at given point"""
-        # TODO: finish function
         from_node = self.manager.IndexToNode(from_index)
         return self.nodes[from_node].demand
-        # return 1
 
     def solve(self):
+        """Solves routing problem with parameters"""
         # add distance dimension
         transit_callback_index = self.routing.RegisterTransitCallback(
             self._distance_callback_symmetrical
@@ -134,7 +132,7 @@ class Solver:
         search_parameters.solution_limit = self.solution_limit
 
         # calculate solution
-        self.solution = self.routing.SolveWithParameters(search_parameters)
+        self.solution: Solution = self.routing.SolveWithParameters(search_parameters)
 
         # return solution or raise error
         if self.solution:

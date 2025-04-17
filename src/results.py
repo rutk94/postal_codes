@@ -15,15 +15,12 @@ if TYPE_CHECKING:
 
 class Results:
     """
-    Represents calculation results
+    Represents calculation results.
 
     Attributes:
-        solver: Solver
-            Solver object
-        vehicles: list[Vehicle]
-            List of vehicle objects
-        codes: list[str]
-            List of all postal codes
+        solver (Solver): Solver object
+        vehicles (list[Vehicle]): List of vehicle objects
+        codes (list[str]): List of all postal codes
     """
 
     def __init__(
@@ -39,17 +36,15 @@ class Results:
         matched_code_colname: str = 'CASE_POSTAL_CODE',
     ) -> pd.DataFrame:
         """
-        Returns results of matching vehicles to cases (postal codes)
+        Returns results of matching vehicles to cases (postal codes).
 
         Args:
-            vehicle_id_colname: str
-                Name of column with vehicle identification
-            matched_code_colname: str
-                Name of column with postal code matched to vehicle
+            vehicle_id_colname (str): Name of column with vehicle identification
+            matched_code_colname (str): Name of column with postal code matched to vehicle
         Returns:
-            match_result_df: pd.DataFrame
-                DataFrame with results of matching vehicles to cases (postal codes)
+            match_result_df (pd.DataFrame): DataFrame with results of matching vehicles to cases (postal codes)
         """
+
         all_nrs: list[int] = []
         all_codes: list[str] = []
         for i in range(len(self.vehicles)):
@@ -81,23 +76,15 @@ class Results:
         Generates matching results as map plot.
 
         Args:
-            output_path: Path
-                Path to output file.
-            map_shape_path: Path
-                Path to map shape file in .geojson format
-            match_result_df: Optional[pd.DataFrame] = None
-                DataFrame object with matching results. If None, self.get_matching_result method is used
-            vehicle_id_colname: str
-                Name of column with vehicle identification
-            matched_code_colname: str
-                Name of column with postal code matched to vehicle
-
-        Returns:
-            None
+            output_path (Path): Path to output file.
+            map_shape_path (Path): Path to map shape file in .geojson format
+            match_result_df (Optional[pd.DataFrame]): DataFrame object with matching results.
+                If None, self.get_matching_result method is used
+            vehicle_id_colname (str): Name of column with vehicle identification
+            matched_code_colname (str): Name of column with postal code matched to vehicle
 
         Raises:
-            ValueError
-                if output_path.suffix != '.png'
+            ValueError: If output_path.suffix != '.png'
         """
 
         nomi = pgeocode.Nominatim('pl')

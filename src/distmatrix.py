@@ -11,9 +11,9 @@ class DistanceMatrix:
     def __init__(self) -> None:
         # placeholders
         self.df: pd.DataFrame = pd.DataFrame()  # set while calling generate()
-        self.proper_codes: list[str] = []
-        self.wrong_format_codes: list[str] = []
-        self.unknown_codes: list[str] = []
+        self.proper_codes: list[str] = []  # set while calling _check()
+        self.wrong_format_codes: list[str] = []  # set while calling _check()
+        self.unknown_codes: list[str] = []  # set while calling _check()
 
     @classmethod
     def create_from_filepath(cls) -> DistanceMatrix:  # type: ignore[empty-body]
@@ -26,25 +26,21 @@ class DistanceMatrix:
     def _check(self, codes: list[str], setattr_enabled: bool = True) -> list[str]:
         """
         Checks format of postal codes and whether they are available in pgeocode database.
+
         Args:
-            codes: list[str]
-                List of postal codes
-            setattr_enabled: bool
-                If you need to set attributes
+            codes (list[str]): List of postal codes
+            setattr_enabled (bool): If you need to set attributes
                 self.proper_codes, self.wrong_format_codes, self.unknown_codes
 
         Returns:
-            proper_codes: list[str]
-                List of proper postal codes
+            proper_codes (list[str]): List of proper postal codes
 
         Sets attributes (if setattr_enabled is True):
-            self.proper_codes: list[str]
-                List of proper postal codes
-            self.wrong_format_codes: list[str]
-                List of postal codes with wrong format
-            self.unknown_codes: list[str]
-                List of postal codes which are not available in pgeocode database
+            self.proper_codes (list[str]): List of proper postal codes
+            self.wrong_format_codes (list[str]): List of postal codes with wrong format
+            self.unknown_codes (list[str]): List of postal codes which are not available in pgeocode database
         """
+
         # wrong format codes
         pattern = re.compile(r'\d{2}-\d{3}')
         wrong_format_codes: list[str] = [
@@ -86,20 +82,18 @@ class DistanceMatrix:
         Generates symmetrical matrix including distances between postal codes, as DataFrame object.
 
         Args:
-            codes: list[str]
-                List of postal codes
-            dist_unit: Literal['km', 'm'] = 'm'
-                Unit of calculated distances: 'km' - kilometers, 'm' - meters
-            codes_col: str = 'KOD_POCZ'
-                Name of 1st column including postal codes
+            codes (list[str]): List of postal codes
+            dist_unit (Literal['km', 'm'], default: 'm'): Unit of calculated distances
+                'km' - kilometers, 'm' - meters
+            codes_col (str, default: 'KOD_POCZ'): Name of 1st column including postal codes
 
         Returns:
-            matrix_df: pd.DataFrame
-                Matrix of distances between postal codes
+            matrix_df (pd.DataFrame): Matrix of distances between postal codes
 
         Sets attributes:
-            self.df: pd.DataFrame = matrix_df.copy()
+            self.df (pd.DataFrame): Matrix of distances between postal codes
         """
+
         # check provided distance unit
         if dist_unit.lower() not in ['km', 'm']:
             raise ValueError(
@@ -148,17 +142,17 @@ class DistanceMatrix:
         Returns positional number (id) of given code in distance matrix dataframe.
 
         Args:
-            code: str
-                Postal code to find in distance matrix dataframe
+            code (str): Postal code to find in distance matrix dataframe
 
         Returns:
-            matrix_id: int
-                Positional number (id) of given code
+            matrix_id (int): Positional number (id) of given code
 
         Raises:
-            AttributeError - if dataframe doesn't exist yet.
-            ValueError - if given code doesn't exist in distance matrix
+            AttributeError: If dataframe doesn't exist yet.
+            ValueError: If given code doesn't exist in distance matrix
+
         """
+
         if self.df.equals(pd.DataFrame()):
             raise AttributeError(
                 "DistanceMatrix dataframe doesn't exist yet. "

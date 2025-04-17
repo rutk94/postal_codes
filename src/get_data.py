@@ -22,8 +22,7 @@ class PostalCodeData:
         Returns all postal codes from data file.
 
         Returns:
-            codes: list[str]
-                list of postal codes from data file
+            codes (list[str]): List of postal codes from data file
         """
 
         codes_df: pd.DataFrame = pd.read_excel(self.path, usecols=[self.colname])
@@ -35,23 +34,21 @@ class PostalCodeData:
     ) -> list[str]:
         """
         Generates list of postal codes choosed randomly from codes_list.
+
         Args:
-            size: int
-                Size of random sample list
-            codes: list[str]
-                Entry list of postal codes to generate a sample from
-            seed: Optional[int]
-                Random seed for sample generator
+            size (int): Size of random sample list
+            codes (Optional[list[str]]): Entry list of postal codes to generate a sample from
+            seed (Optional[int], default: env. variable `SEED`): Random seed for sample generator
 
         Returns:
-            sample_list: list[int]
-                Generated list of postal codes choosed randomly.
+            sample_list (list[int]): Generated list of postal codes choosed randomly.
                 If size == len(codes_list), returns codes_list
 
         Raises:
-            ValueError
-                If size > len(codes_list)
+            ValueError: If codes_list is empty
+            ValueError: If size > len(codes_list)
         """
+
         codes_list: list[str] = codes if codes is not None else self.all_codes
 
         if len(codes_list) == 0:
@@ -62,7 +59,8 @@ class PostalCodeData:
         elif size == len(codes_list):
             return codes_list
         else:
-            np.random.seed(seed)
+            if seed:
+                np.random.seed(seed)
             codes_array: np.ndarray = np.array(codes_list)
             sample_array: np.ndarray = np.random.choice(
                 codes_array, size=size, replace=False
